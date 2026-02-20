@@ -377,7 +377,7 @@ export default function Sidebar({ isOpen, onNewChat, onLoadConversation, onSideb
                                 </Link>
                                 <div className="pt-2 border-t border-white/10 dark:border-white/10 border-black/10 space-y-2">
                                     <p className="text-xs text-muted-foreground px-2">Contact</p>
-                                    <a href="https://github.com/Joseph1997-eng" target="_blank" rel="noopener noreferrer" className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 text-sm text-foreground">
+                                    <a href="https://github.com/rose1996iv" target="_blank" rel="noopener noreferrer" className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 text-sm text-foreground">
                                         <Github className="w-4 h-4" />
                                         <span>GitHub</span>
                                     </a>
@@ -500,7 +500,7 @@ export default function Sidebar({ isOpen, onNewChat, onLoadConversation, onSideb
                         </Link>
                         <div className="pt-2 border-t border-black/10 dark:border-white/10 space-y-2">
                             <p className="text-xs text-muted-foreground px-2">Contact</p>
-                            <a href="https://github.com/Joseph1997-eng" target="_blank" rel="noopener noreferrer" className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-sm text-foreground">
+                            <a href="https://github.com/rose1996iv" target="_blank" rel="noopener noreferrer" className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-sm text-foreground">
                                 <Github className="w-4 h-4" />
                                 <span>GitHub</span>
                             </a>

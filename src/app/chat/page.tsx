@@ -44,6 +44,7 @@ export default function ChatPage() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
     const supabase = createClient();
     const router = useRouter();
 
@@ -64,6 +65,13 @@ export default function ChatPage() {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
+        }
+    }, [input]);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -475,14 +483,20 @@ export default function ChatPage() {
                         <div className="flex items-end gap-2">
                             <FileUpload onFileSelect={handleFileSelect} disabled={loading} />
                             <div className="flex-1 flex items-center gap-2">
-                                <input
-                                    type="text"
+                                <textarea
+                                    ref={textareaRef}
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
-                                    onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter" && !e.shiftKey) {
+                                            e.preventDefault();
+                                            sendMessage();
+                                        }
+                                    }}
                                     placeholder="Bia halnak..."
-                                    className="flex-1 bg-background/50 border border-input rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                                    className="flex-1 bg-background/50 border border-input rounded-3xl px-6 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none min-h-[48px] overflow-y-auto"
                                     disabled={loading}
+                                    rows={1}
                                 />
                                 <button
                                     onClick={() => sendMessage()}

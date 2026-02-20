@@ -14,7 +14,7 @@ Built with cutting-edge web technologies and powered by the **Google Gemini 2.5 
 
 LAI AI is programmed not just to be an assistant, but to be an interactive embodiment of Lai culture:
 
-- **Cultural Preservation:** Strictly follows the grammar and linguistic standards based on David Van Bik's English-Chin Dictionary and the Hakha Lai Bible (SOV structure). Includes active spelling correction for Pure Hakha.
+- **Cultural Preservation:** Strictly follows formal Hakha Lai grammar and linguistic standards (SOV structure). Includes an active spelling correction protocol to ensure consistency and language purity.
 - **Siaherhnak (Deep Love & Care):** Responds with deep empathy, providing a safe space for youth experiencing digital struggles or emotional distress.
 - **Mifimnak (Wisdom) & Hawikomnak (Friendship):** Acts as a wise big brother, offering natural, dialogue-driven psychological encouragement over robotic advice.
 - **Zatlangbu Pehtlaihnak (Community Connection):** Keeps youth connected to their roots while using cutting-edge technology.
@@ -24,7 +24,7 @@ LAI AI is programmed not just to be an assistant, but to be an interactive embod
 ## ✨ Key Features
 
 - **🗣️ Bilingual & Conversational Support**: Natural, flowing conversations in pure **Lai Hakha** and English, dynamically translating modern concepts into understandable Lai contexts.
-- **🧠 Advanced AI Engine**: Powered by **Google Gemini 2.5 Flash**, finely tuned with a secret prompt engine (v5.0) to use David Van Bik's linguistics and Dr. Hoi Cung Tum's clarity.
+- **🧠 Advanced AI Engine**: Powered by **Google Gemini 2.5 Flash**, finely tuned with a proprietary prompt engine to maintain distinct linguistic flow and deep conceptual clarity without sacrificing the natural language bounds.
 - **👁️ Native Vision Capabilities**: Drag-and-drop file and image uploads for the model to intelligently analyze visually.
 - **🎨 Glassmorphism UI/UX**:
   - Stunning, responsive transparent layouts with Framer Motion animations.

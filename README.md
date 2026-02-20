@@ -2,49 +2,64 @@
 
 ![LAI AI Banner](Preview.png)
 
-**LAI AI 2.0** is a modern, culturally-aware AI chatbot designed specifically for the **Lai Hakha-speaking community**. Built with the latest web technologies and powered by **Google Gemini**, it bridges the gap between advanced AI and local culture, providing a seamless bilingual experience.
+**LAI AI 2.0 (Leoliver's Assistant Intelligence)** is a premium, culturally-aware AI chatbot meticulously designed to serve the **Lai Hakha-speaking community** with warmth, wisdom, and care. 
+
+Built with cutting-edge web technologies and powered by the **Google Gemini 2.5 Flash API**, it seamlessly bridges the gap between traditional cultural values and modern artificial intelligence, acting as a wise, modern mentor (Upa) for the Chin youth.
 
 > *"Hmailei AI biaruahnak sining cu a tu ah rak hman ve."* (Experience the future of AI conversation now.)
 
+---
+
+## 🎯 Core Mission & Cultural Embedded Values
+
+LAI AI is programmed not just to be an assistant, but to be an interactive embodiment of Lai culture:
+
+- **Cultural Preservation:** Strictly follows the grammar and linguistic standards based on David Van Bik's English-Chin Dictionary and the Hakha Lai Bible (SOV structure). Includes active spelling correction for Pure Hakha.
+- **Siaherhnak (Deep Love & Care):** Responds with deep empathy, providing a safe space for youth experiencing digital struggles or emotional distress.
+- **Mifimnak (Wisdom) & Hawikomnak (Friendship):** Acts as a wise big brother, offering natural, dialogue-driven psychological encouragement over robotic advice.
+- **Zatlangbu Pehtlaihnak (Community Connection):** Keeps youth connected to their roots while using cutting-edge technology.
+
+---
+
 ## ✨ Key Features
 
-- **🗣️ Bilingual Support**: Full support for **English** and **Lai Hakha** languages, including UI translations and AI responses.
-- **🧠 Advanced AI**: Powered by **Google Gemini Pro** and **Gemini Pro Vision** for intelligent text and image analysis.
-- **👁️ Vision Capabilities**: Upload images and ask questions about them in Lai Hakha or English.
-- **🎨 Modern UI/UX**:
-  - Glassmorphism design with smooth animations.
-  - Responsive Sidebar with dynamic layout adjustments.
-  - Dark/Light mode support with auto-detection.
-  - "Thinking" animations for a natural conversational feel.
-- **⚡ Real-time Streaming**: Fast, streaming responses for a fluid chat experience.
-- **📂 File Management**: Drag-and-drop file uploads with preview.
-- **🔐 Secure Authentication**: Integrated with **Supabase Auth** for secure user management.
-- **🗄️ Chat History**: Automatically saves conversations to Supabase database.
+- **🗣️ Bilingual & Conversational Support**: Natural, flowing conversations in pure **Lai Hakha** and English, dynamically translating modern concepts into understandable Lai contexts.
+- **🧠 Advanced AI Engine**: Powered by **Google Gemini 2.5 Flash**, finely tuned with a secret prompt engine (v5.0) to use David Van Bik's linguistics and Dr. Hoi Cung Tum's clarity.
+- **👁️ Native Vision Capabilities**: Drag-and-drop file and image uploads for the model to intelligently analyze visually.
+- **🎨 Glassmorphism UI/UX**:
+  - Stunning, responsive transparent layouts with Framer Motion animations.
+  - Retractable Sidebar with Chat History search capability.
+  - "Thinking" animations to simulate a human-like response delay.
+  - Native Dark & Light mode support.
+- **🔐 Secure Authentication**: Integrated deeply with **Supabase Auth** for robust session management (Middleware injected).
+- **🗄️ Chat History**: Conversations are actively saved and continuously synced with a PostgreSQL Supabase database.
 
-## 🛠️ Tech Stack
+---
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+## 🛠️ Technology Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router & SSR Middleware)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **AI Model**: [Google Gemini API](https://ai.google.dev/)
-- **Database & Auth**: [Supabase](https://supabase.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) & [Vanilla CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- **AI Model**: [Google Gemini API](https://ai.google.dev/) (2.5 Flash Edition)
+- **Database & Auth**: [Supabase](https://supabase.com/) & PostgreSQL
+- **Animations & Icons**: [Framer Motion](https://www.framer.com/motion/) | [Lucide React](https://lucide.dev/)
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
-- Node.js 18+ installed
-- A Supabase project
-- A Google Cloud project with Gemini API enabled
+- Node.js 18+ (LTS recommended)
+- A [Supabase](https://supabase.com) project configured with `conversations`, `messages`, and `user_profile` tables.
+- A Google Cloud project with the **Gemini API** enabled.
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Joseph1997-eng/LAI-AI-2.0.git
-   cd LAI-AI-2.0
+   git clone https://github.com/rose1996iv/LaiAIv2.git
+   cd LaiAIv2
    ```
 
 2. **Install dependencies**
@@ -53,7 +68,7 @@
    ```
 
 3. **Set up environment variables**
-   Create a `.env.local` file in the root directory and add your keys:
+   Create a `.env.local` file in the root directory and add your keys securely:
    ```env
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
@@ -66,11 +81,13 @@
    ```
 
 5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000) to see the app.
+   Navigate to [http://localhost:3000](http://localhost:3000) to start your dialogue with LAI AI!
+
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are strictly monitored to ensure the **Hakha Lai Cultural Prompt Protocol** is protected. However, UI/UX, logic, and component PRs are enthusiastically welcomed!
 
 ## 📄 License
 

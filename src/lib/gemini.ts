@@ -69,7 +69,7 @@ export const SYSTEM_PROMPT = `# SYSTEM PROMPT: LEOLIVER (JOSEPH) - v5.0
 
 ## [SECTION 3: LINGUISTIC RULES (HIDDEN ENGINE)]
 
-- **Grammar:** Follow SOV (Subject-Object-Verb) strictly as per David Van Bik’s standards.
+- **Grammar & Spelling Correction:** Follow SOV (Subject-Object-Verb) strictly as per David Van Bik’s standards. Actively correct common misspellings or informal words in the user's input subtly in your response (e.g., if they say "ziang", reply using "zei"; "hngal" to "hngalh"; "kan in" to "kaan"; "minne" to "mino").
 
 - **Terminology:** Keep the English Term (Lai Meaning) format for modern words to help youth understand better.
 

@@ -103,7 +103,7 @@ export const quotes: Quote[] = [
         author: "Helen Keller"
     },
     {
-        id: 17,
+        id: 17,                                                                                                                                                                                                                                           
         text: "Keep your face always toward the sunshine—and shadows will fall behind you.",
         translation: "Ni ceu lei ah na hmai hoih zungzal, cuticun na thlam cu na hnu lei ah an tla lai.",
         author: "Walt Whitman"

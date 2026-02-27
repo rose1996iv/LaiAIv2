@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, LogOut } from "lucide-react";
+import { Send, LogOut, Menu, ArrowDown } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,13 +24,12 @@ type Message = {
 };
 
 const ThinkingAnimation = () => (
-    <div className="flex items-center gap-2 text-muted-foreground">
+    <div className="flex items-center gap-1.5 px-4 py-2">
         <div className="flex gap-1">
-            <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-            <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-            <span className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+            <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+            <span className="w-1.5 h-1.5 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
         </div>
-        <span className="text-sm italic">Ka ruat ta lio...</span>
     </div>
 );
 
@@ -45,6 +44,8 @@ export default function ChatPage() {
     const [error, setError] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [showScrollButton, setShowScrollButton] = useState(false);
     const supabase = createClient();
     const router = useRouter();
 
@@ -58,13 +59,22 @@ export default function ChatPage() {
         return () => window.removeEventListener('resize', checkDesktop);
     }, []);
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
+        messagesEndRef.current?.scrollIntoView({ behavior });
+    };
+
+    const handleScroll = () => {
+        if (!scrollContainerRef.current) return;
+        const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+        const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+        setShowScrollButton(!isNearBottom);
     };
 
     useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
+        if (!showScrollButton) {
+            scrollToBottom("auto");
+        }
+    }, [messages, showScrollButton]);
 
     useEffect(() => {
         if (textareaRef.current) {
@@ -92,6 +102,8 @@ export default function ChatPage() {
         setMessages([]);
         setCurrentConversation(null);
         setSelectedFiles([]);
+        if (window.innerWidth < 768) setSidebarOpen(false);
+        setTimeout(() => textareaRef.current?.focus(), 100);
     };
 
     const handleLoadConversation = async (conversationId: string) => {
@@ -105,23 +117,21 @@ export default function ChatPage() {
             setMessages(formattedMessages);
             setSelectedFiles([]);
 
-            // Fetch conversation details
             const { data, error } = await supabase.from('conversations').select('*').eq('id', conversationId).single();
 
             if (data) {
                 setCurrentConversation(data);
             } else {
-                // Fallback: create a partial conversation object if fetch fails but we have ID
-                // This ensures sendMessage appends to this conversation instead of creating a new one
                 console.warn("Could not fetch conversation details, using fallback", error);
                 setCurrentConversation({
                     id: conversationId,
-                    title: "Chat", // Default title, will be updated if we have it in list
+                    title: "Chat",
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString(),
-                    user_id: "" // We don't strictly need this for sending messages usually
+                    user_id: ""
                 });
             }
+            scrollToBottom("auto");
         } catch (error) {
             console.error("Error loading conversation:", error);
         }
@@ -164,7 +174,6 @@ export default function ChatPage() {
         const textToSend = messageOverride || input;
         if ((!textToSend.trim() && selectedFiles.length === 0) || loading) return;
 
-        // Clear any previous errors
         setError(null);
 
         let messageText = textToSend;
@@ -180,8 +189,8 @@ export default function ChatPage() {
         setSelectedFiles([]);
         setLoading(true);
         setIsStreaming(true);
+        scrollToBottom();
 
-        // Timeout mechanism (30 seconds)
         const timeoutPromise = new Promise((_, reject) => {
             setTimeout(() => reject(new Error('TIMEOUT')), 30000);
         });
@@ -194,7 +203,6 @@ export default function ChatPage() {
                 if (conversation) {
                     setCurrentConversation(conversation);
                 } else {
-                    console.error("Failed to create conversation");
                     throw new Error("Failed to create conversation");
                 }
             }
@@ -226,7 +234,6 @@ export default function ChatPage() {
                 }))
             );
 
-            // Race between API call and timeout
             const fetchPromise = fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -285,8 +292,6 @@ export default function ChatPage() {
         } catch (error) {
             console.error("Chat error:", error);
             setIsStreaming(false);
-
-            // Remove the empty model message if it was added
             setMessages(prev => {
                 const newMsgs = [...prev];
                 if (newMsgs.length > 0 && newMsgs[newMsgs.length - 1].role === 'model' && !newMsgs[newMsgs.length - 1].parts[0].text) {
@@ -295,20 +300,16 @@ export default function ChatPage() {
                 return newMsgs;
             });
 
-            // Set error message in Lai language (Remh Ciami)
             if (error instanceof Error) {
                 if (error.message === 'TIMEOUT') {
-                    // Timeout: Caan a luan cang
-                    setError("Caan a luan cang. Zangfah tein tuah ṭhan.");
+                    setError("Request timed out. Please try again.");
                 } else if (error.message.includes('API Key')) {
-                    // API Key Issue
-                    setError("API Key he pehtlai in buainak a um. Zangfah tein Administrator chawn hna.");
+                    setError("API Key configuration issue.");
                 } else {
-                    // General Error - Show the specific message for debugging
-                    setError(`Technical error: ${error.message} (Zangfah tein tuah ṭhan)`);
+                    setError(`Error: ${error.message}`);
                 }
             } else {
-                setError("Technical error tlawmpal a um. Zaangfah tein tuah ṭhan.");
+                setError("An unknown error occurred.");
             }
         } finally {
             setLoading(false);
@@ -316,7 +317,7 @@ export default function ChatPage() {
     };
 
     return (
-        <div className="flex h-screen bg-background text-foreground">
+        <div className="flex h-screen bg-background text-foreground overflow-hidden">
             <Sidebar
                 isOpen={sidebarOpen}
                 onNewChat={handleNewChat}
@@ -324,83 +325,61 @@ export default function ChatPage() {
                 onSidebarToggle={setSidebarOpen}
                 onExplainQuote={(text) => {
                     const explainPrompt = `Explain more about this quote: "${text}"`;
-                    // setInput(explainPrompt); // Optional: if we want to show it in input too, but usually we clear it
                     sendMessage(explainPrompt);
                 }}
             />
 
-            {/* Main Chat Area - responsive margin based on sidebar state */}
+            {/* Main Chat Area */}
             <div
-                className={`flex-1 flex flex-col relative transition-all duration-300 ${sidebarOpen ? 'md:ml-64' : 'md:ml-16'
-                    }`}
+                className={`flex-1 flex flex-col relative transition-all duration-300 min-w-0 ${sidebarOpen ? 'md:ml-64' : 'md:ml-16'}`}
             >
-                <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-5 pointer-events-none" />
-
-                <header className="flex items-center justify-between p-4 border-b border-border glass z-10">
-                    <div className="flex items-center gap-3">
-                        {/* Hamburger Menu Button - Mobile Only */}
+                {/* Header Minimum style */}
+                <header className="flex items-center justify-between p-3 sticky top-0 bg-background/80 backdrop-blur-md z-10 border-b border-transparent">
+                    <div className="flex items-center gap-2">
                         <button
                             onClick={() => setSidebarOpen(!sidebarOpen)}
-                            className="p-2 rounded-lg hover:bg-white/10 transition-colors md:hidden"
-                            aria-label="Toggle Menu"
+                            className="p-2 rounded-md hover:bg-muted transition-colors md:hidden"
                         >
-                            <svg
-                                className="w-6 h-6"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                />
-                            </svg>
+                            <Menu className="w-5 h-5" />
                         </button>
-
-                        <div className="w-10 h-10 rounded-full overflow-hidden">
-                            <Image
-                                src="/joseph.jpg"
-                                alt="LAI AI"
-                                width={40}
-                                height={40}
-                                className="object-cover"
-                            />
-                        </div>
-                        <div>
-                            <span className="font-bold text-lg">LAI AI</span>
-                            <p className="text-xs text-muted-foreground">Joseph&apos;s Assistant</p>
-                        </div>
+                        <h1 className="font-semibold text-lg text-foreground px-2">
+                            {currentConversation?.title || "New Chat"}
+                        </h1>
                     </div>
-                    <button onClick={handleLogout} className="p-2 hover:bg-accent rounded-full transition-colors" title="Sign Out">
-                        <LogOut className="w-5 h-5" />
-                    </button>
                 </header>
 
-                <div className="flex-1 overflow-y-auto min-h-0 p-4 space-y-6">
+                {/* Messages Container */}
+                <div
+                    ref={scrollContainerRef}
+                    onScroll={handleScroll}
+                    className="flex-1 overflow-y-auto pb-48 pt-4"
+                >
                     {messages.length === 0 && (
-                        <div className="flex flex-col items-center justify-center h-full text-muted-foreground opacity-50">
-                            <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
+                        <div className="flex flex-col items-center justify-center h-full max-w-2xl mx-auto px-4 text-center mt-[-10vh]">
+                            <div className="w-16 h-16 rounded-full overflow-hidden mb-6 border border-border shadow-sm">
                                 <Image
                                     src="/joseph.jpg"
                                     alt="LAI AI"
-                                    width={80}
-                                    height={80}
+                                    width={64}
+                                    height={64}
                                     className="object-cover"
+                                    priority
                                 />
                             </div>
-                            <p className="text-lg font-medium">Start a conversation with Joseph&apos;s Assistant</p>
-                            <p className="text-sm">Lai holh in biaruah khawh ka si.</p>
+                            <h2 className="text-2xl font-semibold mb-2">How can I help you today?</h2>
+                            <p className="text-muted-foreground text-sm max-w-md">
+                                Lai holh in biaruah khawh ka si. Ask me anything, or upload an image to discuss.
+                            </p>
                         </div>
                     )}
 
-                    <AnimatePresence>
+                    <AnimatePresence initial={false}>
                         {messages.map((msg, idx) => (
                             <motion.div
                                 key={idx}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3 }}
                             >
                                 <ChatMessage
                                     role={msg.role}
@@ -414,98 +393,79 @@ export default function ChatPage() {
 
                     {loading && messages.length > 0 && messages[messages.length - 1].role === "user" && (
                         <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="flex justify-start"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="w-full flex justify-center py-6"
                         >
-                            <div className="flex gap-3">
-                                <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 mt-1">
-                                    <Image
-                                        src="/joseph.jpg"
-                                        alt="Joseph AI"
-                                        width={32}
-                                        height={32}
-                                        className="object-cover"
-                                    />
+                            <div className="flex w-full max-w-3xl gap-4 px-4">
+                                <div className="flex-shrink-0 mt-1 flex">
+                                    <div className="w-8 h-8 rounded-full overflow-hidden border border-border">
+                                        <Image
+                                            src="/joseph.jpg"
+                                            alt="LAI AI"
+                                            width={32}
+                                            height={32}
+                                            className="object-cover opacity-50 grayscale"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="bg-muted/50 border border-white/5 rounded-2xl rounded-tl-none p-4">
-                                    <ThinkingAnimation />
-                                </div>
+                                <ThinkingAnimation />
                             </div>
                         </motion.div>
                     )}
 
-                    {error && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="flex justify-center"
-                        >
-                            <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-4 max-w-md">
-                                <div className="flex items-start gap-3">
-                                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center">
-                                        <span className="text-red-500 text-sm">⚠</span>
-                                    </div>
-                                    <div className="flex-1">
-                                        <p className="text-red-400 text-sm mb-3">{error}</p>
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={() => {
-                                                    setError(null);
-                                                    // Retry by getting the last user message and resending
-                                                    const lastUserMsg = messages.filter(m => m.role === 'user').pop();
-                                                    if (lastUserMsg) {
-                                                        setInput(lastUserMsg.parts[0].text);
-                                                    }
-                                                }}
-                                                className="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-colors"
-                                            >
-                                                Try Again
-                                            </button>
-                                            <button
-                                                onClick={() => setError(null)}
-                                                className="px-3 py-1 bg-white/5 hover:bg-white/10 text-muted-foreground rounded-lg text-sm transition-colors"
-                                            >
-                                                Dismiss
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-
-                    <div ref={messagesEndRef} />
+                    <div ref={messagesEndRef} className="h-4" />
                 </div>
 
-                <div className="p-4 glass border-t border-border">
-                    <div className="max-w-4xl mx-auto">
-                        <div className="flex items-end gap-2">
-                            <FileUpload onFileSelect={handleFileSelect} disabled={loading} />
-                            <div className="flex-1 flex items-center gap-2">
-                                <textarea
-                                    ref={textareaRef}
-                                    value={input}
-                                    onChange={(e) => setInput(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter" && !e.shiftKey) {
-                                            e.preventDefault();
-                                            sendMessage();
-                                        }
-                                    }}
-                                    placeholder="Bia halnak..."
-                                    className="flex-1 bg-background/50 border border-input rounded-3xl px-6 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none min-h-[48px] overflow-y-auto"
-                                    disabled={loading}
-                                    rows={1}
-                                />
+                {/* Floating Input Area */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background to-transparent pt-6 pb-6 px-4">
+                    <div className="max-w-3xl mx-auto relative">
+                        {showScrollButton && (
+                            <button
+                                onClick={() => scrollToBottom("smooth")}
+                                className="absolute -top-14 left-1/2 -translate-x-1/2 p-2 rounded-full bg-background border border-border shadow-md hover:bg-muted text-foreground z-20"
+                            >
+                                <ArrowDown className="w-4 h-4" />
+                            </button>
+                        )}
+
+                        <div className="relative flex flex-col w-full bg-background border border-border shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-2xl overflow-hidden focus-within:ring-1 focus-within:ring-border">
+                            {error && (
+                                <div className="px-4 py-2 bg-red-500/10 border-b border-red-500/20 text-red-500 text-xs flex justify-between items-center">
+                                    <span>{error}</span>
+                                    <button onClick={() => setError(null)} className="hover:underline">Dismiss</button>
+                                </div>
+                            )}
+
+                            <textarea
+                                ref={textareaRef}
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && !e.shiftKey) {
+                                        e.preventDefault();
+                                        sendMessage();
+                                    }
+                                }}
+                                placeholder="Message LAI AI..."
+                                className="w-full max-h-48 px-4 py-3 pb-12 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none resize-none overflow-y-auto text-[15px] leading-relaxed"
+                                disabled={loading}
+                                rows={1}
+                            />
+
+                            <div className="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+                                <FileUpload onFileSelect={handleFileSelect} disabled={loading} />
                                 <button
                                     onClick={() => sendMessage()}
                                     disabled={loading || (!input.trim() && selectedFiles.length === 0)}
-                                    className="p-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 disabled:opacity-50 transition-all hover:scale-105 active:scale-95"
+                                    className="p-1.5 rounded-lg bg-foreground text-background transition-all disabled:opacity-30 disabled:bg-muted-foreground/30 hover:opacity-90"
                                 >
-                                    <Send className="w-5 h-5" />
+                                    <Send className="w-5 h-5 mx-0.5" />
                                 </button>
                             </div>
+                        </div>
+                        <div className="text-center mt-2 text-[11px] text-muted-foreground">
+                            LAI AI can make mistakes. Consider verifying important information.
                         </div>
                     </div>
                 </div>

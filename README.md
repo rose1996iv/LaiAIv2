@@ -33,13 +33,15 @@ LAI AI is programmed not just to be an assistant, but to be an interactive embod
   - Native Dark & Light mode support.
 - **🔐 Secure Authentication**: Integrated deeply with **Supabase Auth** for robust session management (Middleware injected).
 - **🗄️ Chat History**: Conversations are actively saved and continuously synced with a PostgreSQL Supabase database.
+- **🧩 Browser Extension (Native)**: A standalone Manifest V3 Chrome Extension that allows users to instantly summarize any active web page in Lai Hakha with AI-generated follow-up questions.
 
 ---
 
 ## 🛠️ Technology Stack
 
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router & SSR Middleware)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Extension**: Vanilla JS, HTML, CSS (Manifest V3)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) / JavaScript
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) & [Vanilla CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - **AI Model**: [Google Gemini API](https://ai.google.dev/) (2.5 Flash Edition)
 - **Database & Auth**: [Supabase](https://supabase.com/) & PostgreSQL

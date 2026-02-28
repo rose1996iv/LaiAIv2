@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "LAI AI - Chrome Extension",
+    "version": "1.0.0",
+    "description": "LAI AI web app converted into a Chrome Extension.",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Open LAI AI",
+        "default_icon": {
+            "128": "LAI AI.png"
+        }
+    },
+    "icons": {
+        "128": "LAI AI.png"
+    },
+    "permissions": [
+        "storage",
+        "activeTab"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

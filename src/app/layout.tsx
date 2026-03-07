@@ -5,6 +5,7 @@ import "highlight.js/styles/github-dark.css";
 import { SettingsProvider } from "@/context/SettingsContext";
 import QuoteTicker from "@/components/QuoteTicker";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
           {children}
         </SettingsProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

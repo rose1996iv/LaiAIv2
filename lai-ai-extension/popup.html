@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAI AI Summarizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                <img src="icon.png" alt="LAI AI Logo" class="logo">
+                <div class="header-text">
+                    <h1>LAI AI</h1>
+                    <p>Nihin caah zei bia dah na theih duh?</p>
+                </div>
+            </div>
+            <button id="export-btn" class="icon-btn hidden" title="Export to Markdown">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- Setup Block (If API Key is missing) -->
+            <div id="setup-block" class="hidden">
+                <p>Welcome! Please enter your Gemini API Key to continue.</p>
+                <input type="password" id="api-key-input" placeholder="Google Gemini API Key">
+                <button id="save-key-btn" class="primary-btn">Save Key</button>
+            </div>
+
+            <!-- Action Block -->
+            <div id="action-block">
+                <button id="summarize-btn" class="primary-btn">
+                    <span class="btn-icon">✨</span>
+                    <span class="btn-text">Summarize this page</span>
+                </button>
+            </div>
+
+            <!-- Loader -->
+            <div id="loader" class="hidden">
+                <div class="spinner"></div>
+                <p>Bia ruah lio...</p>
+            </div>
+
+            <!-- Result Block -->
+            <div id="result-block" class="hidden">
+                <div id="chat-stream">
+                    <!-- Chat bubbles injected here -->
+                </div>
+
+                <div class="follow-up-section">
+                    <h3>Bia Hal Khami (Follow-ups)</h3>
+                    <div id="follow-up-chips" class="chips-container">
+                        <!-- Chips will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input (For continuing the conversation) -->
+            <div id="chat-block" class="hidden">
+                <div class="input-wrapper">
+                    <textarea id="chat-input" placeholder="Hal duh mi dang a um rih maw?" rows="1"></textarea>
+                    <button id="send-btn" aria-label="Send">↑</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>

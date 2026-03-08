@@ -42,27 +42,6 @@ export default function FileUpload({ onFileSelect, disabled }: FileUploadProps) 
                 className="hidden"
                 disabled={disabled}
             />
-
-            {selectedFiles.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-2">
-                    {selectedFiles.map((file, index) => (
-                        <div
-                            key={index}
-                            className="flex items-center gap-2 bg-muted/50 border border-white/10 rounded-lg px-3 py-2 text-sm"
-                        >
-                            {getFileIcon(file)}
-                            <span className="truncate max-w-[150px]">{file.name}</span>
-                            <button
-                                onClick={() => removeFile(index)}
-                                className="hover:text-red-400 transition-colors"
-                            >
-                                <X className="w-4 h-4" />
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            )}
-
             <button
                 onClick={() => fileInputRef.current?.click()}
                 disabled={disabled}

@@ -437,6 +437,29 @@ export default function ChatPage() {
                                 </div>
                             )}
 
+                            {/* File preview chips - above the textarea */}
+                            {selectedFiles.length > 0 && (
+                                <div className="flex flex-wrap gap-2 px-4 pt-3">
+                                    {selectedFiles.map((file, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-center gap-2 bg-muted/50 border border-white/10 rounded-lg px-3 py-1.5 text-xs"
+                                        >
+                                            <span className="truncate max-w-[150px]">{file.name}</span>
+                                            <button
+                                                onClick={() => {
+                                                    const newFiles = selectedFiles.filter((_, i) => i !== index);
+                                                    setSelectedFiles(newFiles);
+                                                }}
+                                                className="hover:text-red-400 transition-colors"
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
                             <textarea
                                 ref={textareaRef}
                                 value={input}
@@ -448,12 +471,12 @@ export default function ChatPage() {
                                     }
                                 }}
                                 placeholder="Message LAI AI..."
-                                className="w-full max-h-48 px-4 py-3 pb-12 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none resize-none overflow-y-auto text-[15px] leading-relaxed"
+                                className="w-full max-h-48 px-4 py-3 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none resize-none overflow-y-auto text-[15px] leading-relaxed"
                                 disabled={loading}
                                 rows={1}
                             />
 
-                            <div className="absolute bottom-2 left-2 right-2 flex justify-between items-end">
+                            <div className="px-2 pb-2 flex justify-between items-center">
                                 <FileUpload onFileSelect={handleFileSelect} disabled={loading} />
                                 <button
                                     onClick={() => sendMessage()}

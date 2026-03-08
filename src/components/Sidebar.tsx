@@ -379,7 +379,7 @@ export default function Sidebar({ isOpen, onNewChat, onLoadConversation, onSideb
 
                                 <div className="border-t border-border pt-4">
                                     <p className="leading-relaxed text-foreground">
-                                        <strong className="text-primary font-medium">LAI AI</strong> cu Lai Hakha holh hman mi jatlangbu caah lungthiang le mifim tein biaruahnak a pe mi AI a si.
+                                        <strong className="text-primary font-medium">LAI AI</strong> cu Lai Hakha holh hman mi zatlangbu caah lungthiang le mifim bantuk tein biaruahnak a pe mi AI chatbot a si.
                                     </p>
                                 </div>
 

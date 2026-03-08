@@ -42,6 +42,7 @@ export default function ChatPage() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [followUpsByMsgIdx, setFollowUpsByMsgIdx] = useState<Record<number, string[]>>({});
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -276,6 +277,34 @@ export default function ChatPage() {
 
             setIsStreaming(false);
 
+            // Generate follow-up suggestions
+            if (modelText) {
+                setMessages(prev => {
+                    const idx = prev.length - 1;
+                    // Generate 3 short follow-up questions from context
+                    fetch("/api/chat", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            message: "Based on this conversation, generate exactly 3 short follow-up questions the user might ask next. Return ONLY the 3 questions as a JSON array of strings, no extra text. Example: [\"Question 1?\", \"Question 2?\", \"Question 3?\"]",
+                            history: [
+                                { role: "user", parts: [{ text: textToSend }] },
+                                { role: "model", parts: [{ text: modelText }] }
+                            ],
+                        }),
+                    }).then(res => res.text()).then(raw => {
+                        try {
+                            const jsonMatch = raw.match(/\[[\s\S]*?\]/);
+                            if (jsonMatch) {
+                                const suggestions = JSON.parse(jsonMatch[0]) as string[];
+                                setFollowUpsByMsgIdx(prev => ({ ...prev, [idx]: suggestions.slice(0, 3) }));
+                            }
+                        } catch { /* silent fail */ }
+                    }).catch(() => { });
+                    return prev;
+                });
+            }
+
             if (conversation && modelText) {
                 const savedModelMsg = await saveMessage(conversation.id, "model", modelText);
                 if (savedModelMsg) {
@@ -352,67 +381,56 @@ export default function ChatPage() {
                 <div
                     ref={scrollContainerRef}
                     onScroll={handleScroll}
-                    className="flex-1 overflow-y-auto pb-48 pt-4"
+                    className="flex-1 overflow-y-auto pb-48 pt-6"
                 >
                     {messages.length === 0 && (
-                        <div className="flex flex-col items-center justify-center h-full max-w-2xl mx-auto px-4 text-center mt-[-10vh]">
-                            <div className="w-16 h-16 rounded-full overflow-hidden mb-6 border border-border shadow-sm">
-                                <Image
-                                    src="/joseph.jpg"
-                                    alt="LAI AI"
-                                    width={64}
-                                    height={64}
-                                    className="object-cover"
-                                    priority
-                                />
+                        <div className="flex flex-col items-center justify-center h-full max-w-xl mx-auto px-4 text-center">
+                            <div className="w-14 h-14 rounded-full overflow-hidden mb-4 border border-border shadow-sm">
+                                <Image src="/joseph.jpg" alt="LAI AI" width={56} height={56} className="object-cover" priority />
                             </div>
-                            <h2 className="text-2xl font-semibold mb-2">How can I help you today?</h2>
-                            <p className="text-muted-foreground text-sm max-w-md">
-                                Lai holh in biaruah khawh ka si. Ask me anything, or upload an image to discuss.
-                            </p>
+                            <h2 className="text-2xl font-semibold mb-2">How can I help you?</h2>
+                            <p className="text-muted-foreground text-sm">Lai holh in biaruah khawh ka si. Ask me anything.</p>
                         </div>
                     )}
 
-                    <AnimatePresence initial={false}>
-                        {messages.map((msg, idx) => (
-                            <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <ChatMessage
-                                    role={msg.role}
-                                    content={msg.parts[0].text}
-                                    isStreaming={isStreaming && idx === messages.length - 1}
-                                    onEdit={(newContent) => handleEditMessage(idx, newContent)}
-                                />
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
+                    <div className="max-w-3xl mx-auto flex flex-col gap-0.5 group">
+                        <AnimatePresence initial={false}>
+                            {messages.map((msg, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.25 }}
+                                >
+                                    <ChatMessage
+                                        role={msg.role}
+                                        content={msg.parts[0].text}
+                                        isStreaming={isStreaming && idx === messages.length - 1}
+                                        onEdit={(newContent) => handleEditMessage(idx, newContent)}
+                                        onFollowUp={(q) => sendMessage(q)}
+                                        suggestedFollowUps={
+                                            !isStreaming && msg.role === 'model' && idx === messages.length - 1
+                                                ? followUpsByMsgIdx[idx]
+                                                : undefined
+                                        }
+                                    />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
 
-                    {loading && messages.length > 0 && messages[messages.length - 1].role === "user" && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="w-full flex justify-center py-6"
-                        >
-                            <div className="flex w-full max-w-3xl gap-4 px-4">
-                                <div className="flex-shrink-0 mt-1 flex">
-                                    <div className="w-8 h-8 rounded-full overflow-hidden border border-border">
-                                        <Image
-                                            src="/joseph.jpg"
-                                            alt="LAI AI"
-                                            width={32}
-                                            height={32}
-                                            className="object-cover opacity-50 grayscale"
-                                        />
+                        {loading && messages.length > 0 && messages[messages.length - 1].role === "user" && (
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex px-4 py-2">
+                                <div className="flex gap-2 items-start">
+                                    <div className="w-7 h-7 rounded-full overflow-hidden border border-border flex-shrink-0 mt-1">
+                                        <Image src="/joseph.jpg" alt="LAI AI" width={28} height={28} className="object-cover opacity-50 grayscale" />
+                                    </div>
+                                    <div className="bg-muted/70 border border-border/60 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                                        <ThinkingAnimation />
                                     </div>
                                 </div>
-                                <ThinkingAnimation />
-                            </div>
-                        </motion.div>
-                    )}
+                            </motion.div>
+                        )}
+                    </div>
 
                     <div ref={messagesEndRef} className="h-4" />
                 </div>

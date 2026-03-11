@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | LAI AI",
-  description: "LAI AI extension te ruahnak le data hmuhchihnak chanchin.",
+  description: "Privacy Policy for the LAI AI browser extension and web application.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
             LAI AI – Privacy Policy
           </h1>
           <p style={{ color: "#94a3b8", fontSize: "14px" }}>
-            Thleng ni: March 11, 2026
+            Last Updated: March 11, 2026
           </p>
         </div>
 
@@ -32,34 +32,34 @@ export default function PrivacyPolicyPage() {
           {/* Section 1 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              1. Thuhlatnak
+              1. Introduction
             </h2>
             <p>
-              LAI AI extension hi Google Sign-In bik in hman theih a si — API key thil dawng a hau lo. Na Google account in sign in lak le, webpage summarize, YouTube video hngalh, le AI tan bia hal theih nak a pek a si. Privacy Policy hi na data le ruahnak an khua dih bang tiah hngalh dingin a si.
+              Welcome to LAI AI (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). The LAI AI extension is designed to help you summarize webpages, analyze YouTube transcripts, and ask questions using AI. This Privacy Policy outlines how we collect, use, protect, and handle your information when you use our browser extension and associated services. We rely exclusively on Google Sign-In for authentication — no API keys are required.
             </p>
           </section>
 
           {/* Section 2 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              2. Zei Data Dah Ka Hmu?
+              2. Information We Collect
             </h2>
-            <p style={{ marginBottom: "12px" }}>LAI AI extension in data phunphun a dawng:</p>
+            <p style={{ marginBottom: "12px" }}>When you use the LAI AI extension, we collect and process the following types of information:</p>
             <ul style={{ paddingLeft: "24px", listStyle: "none" }}>
               <li style={{ marginBottom: "14px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Google Account thil:</strong> Na Google account bia — email le holhpawng — Google OAuth (Supabase in a man) bak in a dawng a si. Na login ziangah tlak in authentication ding bak in a hman a si.
+                <strong style={{ color: "#93c5fd" }}>Google Account Information:</strong> When you sign in via Google OAuth, we receive basic profile information (such as your email address and profile picture). This is managed securely via Supabase and used solely for authentication and session management.
               </li>
               <li style={{ marginBottom: "14px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Webpage bia:</strong> Na &quot;Summarize&quot; tiin na nhal ah, webpage zung bia (text) kha na browser in khi a si le ka te API server tan thawn a si. Bia hi bak na theih ding in AI in a ruah a si.
+                <strong style={{ color: "#93c5fd" }}>Webpage Content:</strong> When you click &quot;Summarize,&quot; the extension extracts the readable text from your current active tab and sends it to our API to generate an AI summary.
               </li>
               <li style={{ marginBottom: "14px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>YouTube Transcript:</strong> Na YouTube video summarize lak ah, video transcript (thlir dang na ngei ah) bak API tan thawn a si.
+                <strong style={{ color: "#93c5fd" }}>YouTube Transcripts:</strong> When summarizing a YouTube video, the extension fetches the video's closed captions/transcript and sends it to our API for processing.
               </li>
               <li style={{ marginBottom: "14px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Chat History:</strong> Na AI tan hal mi bia le a dawng mi zawnnak kha Supabase database ah na account in chiah a si, na theih ding in le hlan thawn theih ding in.
+                <strong style={{ color: "#93c5fd" }}>Conversation History:</strong> Your questions, generated summaries, and follow-up chats are securely stored in our Supabase database tied to your authenticated account so you can access your past conversations.
               </li>
               <li style={{ marginBottom: "14px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Na hman dan (Usage):</strong> Error le bug hngalh ding in bak usage data phun hrang a dawng kho a si; thil kal dang in a dawng lo.
+                <strong style={{ color: "#93c5fd" }}>Usage Data:</strong> We may encounter and log basic usage errors to help us debug and improve the extension's stability.
               </li>
             </ul>
           </section>
@@ -67,14 +67,14 @@ export default function PrivacyPolicyPage() {
           {/* Section 3 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              3. Ka Te in Data Zei Ding Dah A Hman?
+              3. How We Use Your Information
             </h2>
             <ul style={{ paddingLeft: "24px", listStyle: "none" }}>
-              <li style={{ marginBottom: "8px" }}>✅ Extension a kai dang thiah ding in (authenticate)</li>
-              <li style={{ marginBottom: "8px" }}>✅ Na webpage le YouTube video summarize ding in</li>
-              <li style={{ marginBottom: "8px" }}>✅ Na chat history chiah le theih ding in</li>
-              <li style={{ marginBottom: "8px" }}>✅ AI ruahnak (Google Gemini) a bawm ding in</li>
-              <li style={{ marginBottom: "8px" }}>✅ Extension a dang thiah ding le error fix ding in</li>
+              <li style={{ marginBottom: "8px" }}>✅ To authenticate your identity and secure your session.</li>
+              <li style={{ marginBottom: "8px" }}>✅ To generate accurate summaries of websites and YouTube videos.</li>
+              <li style={{ marginBottom: "8px" }}>✅ To save and retrieve your conversation history across your devices.</li>
+              <li style={{ marginBottom: "8px" }}>✅ To transmit prompts securely to our AI provider (Google Gemini API).</li>
+              <li style={{ marginBottom: "8px" }}>✅ To maintain, troubleshoot, and improve the extension.</li>
             </ul>
             <div style={{
               marginTop: "16px",
@@ -84,7 +84,7 @@ export default function PrivacyPolicyPage() {
               padding: "16px"
             }}>
               <p style={{ margin: 0, color: "#fca5a5" }}>
-                🚫 <strong>Ka te in na data kha tangzang pumpi, advertiser, le data broker te tan thawn lo ding a si.</strong> Na data kha sell lo ding, rent lo ding, le thil pakhatkhat ding ah hman lo ding a si.
+                🚫 <strong>We do NOT sell, rent, or share your data with third-party advertisers or data brokers.</strong> Your data is used strictly to provide the core functionality of the LAI AI service.
               </p>
             </div>
           </section>
@@ -92,23 +92,20 @@ export default function PrivacyPolicyPage() {
           {/* Section 4 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              4. Google Sign-In le Authentication
+              4. Google Sign-In and Authentication
             </h2>
             <p style={{ marginBottom: "12px" }}>
-              LAI AI in Google OAuth bak in authentication a hman a si — API key thil dawng lo. Na Google account in sign in lak le:
+              LAI AI operates purely on Google OAuth. You do not need to provide any API keys. When you log in:
             </p>
             <ul style={{ paddingLeft: "24px", listStyle: "none" }}>
               <li style={{ marginBottom: "8px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                Na Google account thil kha Supabase authentication in a man a si le na extension browser storage ah token in a chiah a si.
+                Your identity is verified securely by Google. LAI AI never sees or stores your Google password.
               </li>
               <li style={{ marginBottom: "8px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                Token hi na extension bak in a theih ding a si — URL dang le website dang ten a theih lo ding.
+                An authentication token is generated and stored locally in your browser's extension storage. This token is secure and cannot be accessed by other websites.
               </li>
               <li style={{ marginBottom: "8px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                Extension uninstall lak ah le browser storage tlei lak ah, token hi a tlei a si.
-              </li>
-              <li style={{ marginBottom: "8px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                Google nih in Google Sign-In thil an hria dingin an Privacy Policy <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa" }}>hna in theih theih</a>.
+                If you clear your browser data or uninstall the extension, your local session token is completely removed.
               </li>
             </ul>
           </section>
@@ -116,13 +113,13 @@ export default function PrivacyPolicyPage() {
           {/* Section 5 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              5. Third-Party Service Te
+              5. Third-Party Services
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {[
-                { name: "Google Gemini API", desc: "Webpage le YouTube video summarize ding in. Google nih Privacy Policy a nei.", link: "https://policies.google.com/privacy", color: "#4ade80" },
-                { name: "Supabase", desc: "Google Sign-In authentication le chat history chiah ding in. Supabase nih Privacy Policy a nei.", link: "https://supabase.com/privacy", color: "#60a5fa" },
-                { name: "Google OAuth 2.0", desc: "Na Google account in login ding in. Credentials kha ka te server ah chiah lo — Google tan bak in a kal a si.", link: "https://developers.google.com/identity/protocols/oauth2", color: "#f472b6" },
+                { name: "Google Gemini API", desc: "Used as our core AI engine to generate summaries and answer questions. Regulated by Google's Privacy Policy.", link: "https://policies.google.com/privacy", color: "#4ade80" },
+                { name: "Supabase", desc: "Used as our secure backend infrastructure for managing Google Sign-In and storing your chat history.", link: "https://supabase.com/privacy", color: "#60a5fa" },
+                { name: "Google OAuth 2.0", desc: "Used to authenticate your identity securely without us handling your credentials.", link: "https://policies.google.com/privacy", color: "#f472b6" },
               ].map((service) => (
                 <div key={service.name} style={{
                   background: "rgba(255,255,255,0.04)",
@@ -137,7 +134,7 @@ export default function PrivacyPolicyPage() {
                   <p style={{ margin: 0, fontSize: "14px", color: "#94a3b8" }}>
                     {service.desc}{" "}
                     <a href={service.link} target="_blank" rel="noopener noreferrer" style={{ color: "#60a5fa" }}>
-                      Privacy Policy theih.
+                      Read Privacy Policy
                     </a>
                   </p>
                 </div>
@@ -148,17 +145,17 @@ export default function PrivacyPolicyPage() {
           {/* Section 6 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              6. Data A Khua Dih Dan
+              6. Data Security and Storage
             </h2>
             <ul style={{ paddingLeft: "24px", listStyle: "none" }}>
               <li style={{ marginBottom: "10px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Browser Storage:</strong> Login token kha na browser local storage ah a chiah a si — na extension bak in theih a si.
+                <strong style={{ color: "#93c5fd" }}>In-Transit encryption:</strong> All requests made between the extension, our server, Supabase, and Gemini API are securely encrypted using HTTPS/TLS.
               </li>
               <li style={{ marginBottom: "10px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Server (Supabase):</strong> Chat history kha Supabase cloud database ah a chiah a si. HTTPS/TLS encryption in a khua dih a si.
+                <strong style={{ color: "#93c5fd" }}>Server Storage:</strong> Only your account details and chat histories are stored permanently on our Supabase cloud database to allow continuity across sessions. 
               </li>
               <li style={{ marginBottom: "10px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Webpage bia:</strong> Summarize dingin API tan thawn mi webpage bia kha ka te server ah chiah lo — API response dawng le tlei a si.
+                <strong style={{ color: "#93c5fd" }}>Temporary Processing:</strong> The actual raw text of the webpages you summarize is only processed temporarily in memory to generate the summary and is not stored long-term.
               </li>
             </ul>
           </section>
@@ -166,44 +163,43 @@ export default function PrivacyPolicyPage() {
           {/* Section 7 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              7. Na Nawl Te
+              7. Your Rights and Choices
             </h2>
-            <p style={{ marginBottom: "12px" }}>Na nih in:</p>
+            <p style={{ marginBottom: "12px" }}>You have full control over your data. You can:</p>
             <ul style={{ paddingLeft: "24px", listStyle: "none" }}>
-              <li style={{ marginBottom: "8px" }}>🔓 Extension uninstall lak in na login token tlei theih</li>
-              <li style={{ marginBottom: "8px" }}>📤 Na chat history Markdown/HTML in export theih (extension in)</li>
-              <li style={{ marginBottom: "8px" }}>🗑️ Na conversation history delete dingin ka te tan nawl theih</li>
-              <li style={{ marginBottom: "8px" }}>📋 Na data hmuhchihnak chanchin dotam theih</li>
+              <li style={{ marginBottom: "8px" }}>🔓 Revoke extension access at any time by uninstalling it from your browser.</li>
+              <li style={{ marginBottom: "8px" }}>📤 Export your entire chat history in Markdown or HTML formats directly from the extension UI.</li>
+              <li style={{ marginBottom: "8px" }}>🗑️ Request the deletion of your account and associated chat history by contacting our support team.</li>
             </ul>
           </section>
 
           {/* Section 8 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              8. Fate Nih Hman (Children's Privacy)
+              8. Children's Privacy
             </h2>
             <p>
-              LAI AI kha kum 13 in a thleng lo mi fate tan a si lo. Ka te in fate nih hman an hngalh ah, data hi tleitlak a si ding le account kha close a si ding. Na fate in a hman hngalh ah ka te tan nawl theih.
+              LAI AI is not directed towards individuals under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that we have inadvertently collected data from a child under 13, we will immediately delete such information. Parents and guardians can contact us to request the deletion of their child's data.
             </p>
           </section>
 
           {/* Section 9 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              9. Privacy Policy A Thleng Dan
+              9. Changes to This Privacy Policy
             </h2>
             <p>
-              Privacy Policy hi a thleng cio thei a si. Thleng a um ah, page chung ah date update a si ding. Extension a hman in a thleng mi Policy kha na sawm nain a si. Pawl thar bia a um ah email in ka hrilhfiah ding.
+              We may update this Privacy Policy from time to time. If we make any material changes, we will notify you by updating the &quot;Last Updated&quot; date at the top of this page. We encourage you to review this Privacy Policy periodically to stay informed about how we are protecting your information.
             </p>
           </section>
 
           {/* Section 10 */}
           <section style={{ marginBottom: "40px" }}>
             <h2 style={{ fontSize: "20px", fontWeight: "600", color: "#f1f5f9", marginBottom: "16px", borderLeft: "3px solid #3b82f6", paddingLeft: "12px" }}>
-              10. Ka Te Tan Nawl
+              10. Contact Us
             </h2>
             <p style={{ marginBottom: "12px" }}>
-              Privacy Policy hi a hmun lomi um ah le dotam a um ah, ka te tan nawl theih:
+              If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please feel free to reach out to us:
             </p>
             <div style={{
               background: "rgba(59,130,246,0.08)",
@@ -230,10 +226,7 @@ export default function PrivacyPolicyPage() {
             color: "#475569",
             fontSize: "13px"
           }}>
-            <p>© 2026 LAI AI. Nawl kan nei.</p>
-            <p style={{ marginTop: "4px" }}>
-              Privacy Policy hi Lai (Hakha Chin) in a si — LAI ruata in kal.
-            </p>
+            <p>© 2026 LAI AI. All rights reserved.</p>
           </div>
 
         </div>

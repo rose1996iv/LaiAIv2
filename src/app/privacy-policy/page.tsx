@@ -152,7 +152,7 @@ export default function PrivacyPolicyPage() {
                 <strong style={{ color: "#93c5fd" }}>In-Transit encryption:</strong> All requests made between the extension, our server, Supabase, and Gemini API are securely encrypted using HTTPS/TLS.
               </li>
               <li style={{ marginBottom: "10px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
-                <strong style={{ color: "#93c5fd" }}>Server Storage:</strong> Only your account details and chat histories are stored permanently on our Supabase cloud database to allow continuity across sessions. 
+                <strong style={{ color: "#93c5fd" }}>Server Storage:</strong> Only your account details and chat histories are stored permanently on our Supabase cloud database to allow continuity across sessions.
               </li>
               <li style={{ marginBottom: "10px", paddingLeft: "16px", borderLeft: "2px solid rgba(59,130,246,0.4)" }}>
                 <strong style={{ color: "#93c5fd" }}>Temporary Processing:</strong> The actual raw text of the webpages you summarize is only processed temporarily in memory to generate the summary and is not stored long-term.

@@ -89,6 +89,19 @@ export default function ProfilePage() {
                                 <p>{user?.created_at ? new Date(user.created_at).toLocaleDateString() : "Unknown"}</p>
                             </div>
                         </div>
+
+                        <div className="flex items-start gap-4 p-4 rounded-lg bg-primary/5 border border-primary/20">
+                            <div className="w-5 h-5 text-primary mt-1 flex items-center justify-center font-bold text-xl leading-none">∞</div>
+                            <div className="flex-1 flex items-center justify-between">
+                                <div>
+                                    <p className="text-sm text-primary/80 font-medium mb-1">Prompt Available</p>
+                                    <p className="text-foreground font-medium">Unlimited <span className="text-muted-foreground text-sm font-normal">(Free via Google Sign-In)</span></p>
+                                </div>
+                                <div className="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full text-xs font-semibold">
+                                    Active
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

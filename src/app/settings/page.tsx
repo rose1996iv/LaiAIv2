@@ -39,9 +39,31 @@ export default function SettingsPage() {
                     </div>
 
                     <div className="border-t border-white/10 pt-6">
-                        <p className="text-xs text-muted-foreground">
-                            Settings page is under construction. More options coming soon!
-                        </p>
+                        <h2 className="text-xl font-semibold mb-4">Lai AI Model</h2>
+                        <div className="flex flex-col gap-4">
+                            <div className="flex items-center justify-between p-4 rounded-lg bg-muted/30 border border-white/5">
+                                <div>
+                                    <p className="font-medium">Current Model</p>
+                                    <p className="text-sm text-muted-foreground">The AI engine powering your chats</p>
+                                </div>
+                                <div className="px-3 py-1 bg-primary/20 text-primary border border-primary/30 rounded-full text-xs font-semibold">
+                                    Gemini 1.5 Pro
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-between p-4 rounded-lg bg-muted/30 border border-white/5">
+                                <div>
+                                    <p className="font-medium">Prompt Available</p>
+                                    <p className="text-sm text-muted-foreground">Remaining API requests for your account</p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xl leading-none">∞</span>
+                                    <div className="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full text-xs font-semibold">
+                                        Unlimited
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

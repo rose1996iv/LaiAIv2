@@ -42,7 +42,6 @@ export default function ChatPage() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [followUpsByMsgIdx, setFollowUpsByMsgIdx] = useState<Record<number, string[]>>({});
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -277,33 +276,7 @@ export default function ChatPage() {
 
             setIsStreaming(false);
 
-            // Generate follow-up suggestions
-            if (modelText) {
-                setMessages(prev => {
-                    const idx = prev.length - 1;
-                    // Generate 3 short follow-up questions from context
-                    fetch("/api/chat", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            message: "Based on this conversation, generate exactly 3 short follow-up questions the user might ask next. Return ONLY the 3 questions as a JSON array of strings, no extra text. Example: [\"Question 1?\", \"Question 2?\", \"Question 3?\"]",
-                            history: [
-                                { role: "user", parts: [{ text: textToSend }] },
-                                { role: "model", parts: [{ text: modelText }] }
-                            ],
-                        }),
-                    }).then(res => res.text()).then(raw => {
-                        try {
-                            const jsonMatch = raw.match(/\[[\s\S]*?\]/);
-                            if (jsonMatch) {
-                                const suggestions = JSON.parse(jsonMatch[0]) as string[];
-                                setFollowUpsByMsgIdx(prev => ({ ...prev, [idx]: suggestions.slice(0, 3) }));
-                            }
-                        } catch { /* silent fail */ }
-                    }).catch(() => { });
-                    return prev;
-                });
-            }
+
 
             if (conversation && modelText) {
                 const savedModelMsg = await saveMessage(conversation.id, "model", modelText);
@@ -407,12 +380,10 @@ export default function ChatPage() {
                                         content={msg.parts[0].text}
                                         isStreaming={isStreaming && idx === messages.length - 1}
                                         onEdit={(newContent) => handleEditMessage(idx, newContent)}
-                                        onFollowUp={(q) => sendMessage(q)}
-                                        suggestedFollowUps={
-                                            !isStreaming && msg.role === 'model' && idx === messages.length - 1
-                                                ? followUpsByMsgIdx[idx]
-                                                : undefined
-                                        }
+                                        onAddToInput={(text) => {
+                                            setInput((prev) => prev ? prev + "\n" + `"${text}" ` : `"${text}" `);
+                                            setTimeout(() => textareaRef.current?.focus(), 10);
+                                        }}
                                     />
                                 </motion.div>
                             ))}

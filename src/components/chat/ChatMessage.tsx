@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Copy, Check, Pencil, Heart, Volume2, Share2, User, RefreshCw } from "lucide-react";
+import { Copy, Check, Pencil, Heart, Volume2, Share2, User, RefreshCw, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -12,8 +12,7 @@ interface ChatMessageProps {
     content: string;
     isStreaming?: boolean;
     onEdit?: (newContent: string) => void;
-    onFollowUp?: (question: string) => void;
-    suggestedFollowUps?: string[];
+    onAddToInput?: (text: string) => void;
 }
 
 export default function ChatMessage({
@@ -21,14 +20,40 @@ export default function ChatMessage({
     content,
     isStreaming,
     onEdit,
-    onFollowUp,
-    suggestedFollowUps,
+    onAddToInput,
 }: ChatMessageProps) {
     const [copied, setCopied] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState(content);
     const [isOk, setIsOk] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
+    const [selection, setSelection] = useState<{text: string; top: number; left: number} | null>(null);
+
+    useEffect(() => {
+        const handleGlobalMouseDown = () => {
+            if (window.getSelection()?.isCollapsed) {
+               setTimeout(() => setSelection(null), 150);
+            }
+        };
+        document.addEventListener("mousedown", handleGlobalMouseDown);
+        return () => document.removeEventListener("mousedown", handleGlobalMouseDown);
+    }, []);
+
+    const handleMouseUp = () => {
+        if (isUser || isEditing) return;
+        const windowSelection = window.getSelection();
+        if (windowSelection && windowSelection.toString().trim().length > 0) {
+            const range = windowSelection.getRangeAt(0);
+            const rect = range.getBoundingClientRect();
+            setSelection({
+                text: windowSelection.toString().trim(),
+                top: rect.top - 45,
+                left: rect.left + rect.width / 2,
+            });
+        } else {
+            setSelection(null);
+        }
+    };
 
     const isUser = role === "user";
 
@@ -117,7 +142,10 @@ export default function ChatMessage({
                         ) : isUser ? (
                             <div className="whitespace-pre-wrap">{content}</div>
                         ) : (
-                            <div className="prose dark:prose-invert prose-sm max-w-none break-words leading-relaxed marker:text-foreground prose-p:my-1 prose-headings:my-2">
+                            <div 
+                                className="prose dark:prose-invert prose-sm max-w-none break-words leading-relaxed marker:text-foreground prose-p:my-1 prose-headings:my-2 relative"
+                                onMouseUp={handleMouseUp}
+                            >
                                 <ReactMarkdown
                                     remarkPlugins={[remarkGfm]}
                                     components={{
@@ -167,18 +195,23 @@ export default function ChatMessage({
                         )}
                     </div>
 
-                    {/* Follow-up suggestions (only for AI after streaming done) */}
-                    {!isUser && !isStreaming && !isEditing && suggestedFollowUps && suggestedFollowUps.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-1 max-w-[500px]">
-                            {suggestedFollowUps.map((q, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => onFollowUp?.(q)}
-                                    className="text-xs px-3 py-1.5 rounded-full border border-primary/40 text-primary hover:bg-primary/10 transition-all hover:border-primary/70 text-left leading-snug"
-                                >
-                                    {q}
-                                </button>
-                            ))}
+                    {/* Selection floating toolbar */}
+                    {selection && !isUser && (
+                        <div
+                            className="fixed z-50 bg-popover text-popover-foreground shadow-lg border border-border rounded-md px-1 py-1 text-xs flex gap-1 items-center animate-in fade-in zoom-in-95 pointer-events-auto"
+                            style={{ top: selection.top, left: selection.left, transform: 'translateX(-50%)' }}
+                        >
+                            <button
+                                onClick={() => {
+                                    onAddToInput?.(selection.text);
+                                    setSelection(null);
+                                    window.getSelection()?.removeAllRanges();
+                                }}
+                                className="hover:bg-muted px-2 py-1 rounded transition-colors flex items-center gap-1.5"
+                            >
+                                <Plus className="w-3.5 h-3.5" />
+                                Add to follow-up
+                            </button>
                         </div>
                     )}
 

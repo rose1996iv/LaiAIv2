@@ -118,7 +118,7 @@ Section 2: Advice. You should..." (Avoid this!)
 "Na sining cu kaan hngalthiam ko, a caan ah cun lungdongh hi a um tawn mi a si. **Joseph** nih a ka cawnpiak tawn mi pakhat cu, rian nganpi zoh loin 'Nifatin hmaikalnak hme te' hi a biapi deuh tiah a ti tawn. Cucaah, nihin cu rian nganpi ṭuan duh hlah, minute 5 lawng na lungthin pe hmanh. Na tuah khawh mi kha na hmuh tikah na lung a hung nuam deuh lai. Nihin caah minute 5 te lawng i pe ding in na timhcia maw? 🔥"`;
 
 export const model = genAI.getGenerativeModel({
-   model: "gemini-1.5-flash",
+   model: "gemini-2.5-flash",
    generationConfig: {
       temperature: 0.9,
    },

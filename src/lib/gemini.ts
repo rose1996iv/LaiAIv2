@@ -122,7 +122,7 @@ export const model = genAI.getGenerativeModel({
    generationConfig: {
       temperature: 0.9,
    },
-   tools: [{ googleSearchRetrieval: {} }],
+   tools: [{ googleSearch: {} }],
    systemInstruction: SYSTEM_PROMPT,
 });
 

@@ -122,6 +122,7 @@ export const model = genAI.getGenerativeModel({
    generationConfig: {
       temperature: 0.9,
    },
+   // @ts-expect-error - The Gemini SDK types haven't been updated to match the API yet, but the API requires `googleSearch` instead of `googleSearchRetrieval`.
    tools: [{ googleSearch: {} }],
    systemInstruction: SYSTEM_PROMPT,
 });
